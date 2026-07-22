@@ -105,21 +105,3 @@ Tipagem de testes:
 ```bash
 npx tsc --noEmit -p tsconfig.spec.json
 ```
-
-## Observação sobre o ambiente
-
-No ambiente automatizado em que implementei a solução, `ng build` e `ng test` chegaram a iniciar, mas abortaram sem stacktrace útil do builder. Mesmo assim:
-
-- `npx ngc -p tsconfig.app.json` passou
-- `npx tsc --noEmit -p tsconfig.spec.json` passou
-
-Ou seja, a aplicação ficou consistente do ponto de vista de TypeScript + Angular compiler. Se o abort se repetir fora do ambiente de automação, eu investigaria primeiro o builder/execução local, não os templates em si.
-
-## Próximas melhorias
-
-- Adicionar testes dos componentes e fluxos do modal.
-- Trocar o mock em memória por `json-server`, MSW ou backend real.
-- Adicionar debounce opcional nos filtros.
-- Incluir confirmação visual antes de exclusão.
-- Melhorar foco inicial e trap de teclado do modal para acessibilidade mais forte.
-- Evoluir a edição de lote para um fluxo mais completo, se isso entrar no escopo da entrevista.

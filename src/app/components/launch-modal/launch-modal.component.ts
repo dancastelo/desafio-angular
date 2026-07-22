@@ -10,7 +10,8 @@ import {
   inject,
   input,
   output,
-  signal
+  signal,
+  untracked
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -82,7 +83,7 @@ export class LaunchModalComponent implements OnInit {
     effect(() => {
       const incomingLot = this.lot();
       const visibleLots = this.availableLots();
-      const previousLotId = this.currentLot()?.id ?? null;
+      const previousLotId = untracked(() => this.currentLot()?.id ?? null);
 
       const nextLot =
         visibleLots.find((lot) => lot.id === previousLotId) ??

@@ -81,7 +81,7 @@
 }
 
 .modal-body {
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  grid-template-columns: 1fr;
   align-items: start;
 }
 
@@ -90,16 +90,17 @@
   min-width: 0;
 }
 
+.launch-form {
+  display: grid;
+  gap: 1rem;
+}
+
 .form-section,
 .launches-panel {
   padding: 1rem;
   border: 1px solid var(--line);
   border-radius: 1.2rem;
   background: var(--surface-elevated);
-}
-
-.form-section + .form-section {
-  margin-top: 1rem;
 }
 
 .section-heading {
@@ -266,12 +267,6 @@
 .feedback--success {
   background: rgba(5, 150, 105, 0.11);
   color: #0f7f5b;
-}
-
-@media (max-width: 1040px) {
-  .modal-body {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 720px) {

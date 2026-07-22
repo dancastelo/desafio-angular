@@ -90,10 +90,15 @@ button:focus-visible {
 }
 
 .primary-button {
-  border: 1px solid transparent;
-  background: linear-gradient(135deg, var(--brand-600), var(--brand-800));
+  border: 1px solid var(--brand-800);
+  background: var(--brand-800);
   color: #ffffff;
-  box-shadow: 0 16px 28px rgba(15, 143, 136, 0.22);
+  box-shadow: 0 14px 24px rgba(13, 94, 97, 0.24);
+}
+
+.primary-button:not(:disabled):hover {
+  background: var(--brand-900);
+  border-color: var(--brand-900);
 }
 
 .ghost-button {

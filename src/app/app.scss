@@ -60,6 +60,12 @@
   letter-spacing: -0.03em;
 }
 
+.page-breadcrumb {
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
 .page-header__meta {
   display: flex;
   gap: 0.65rem;

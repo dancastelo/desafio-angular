@@ -1,9 +1,9 @@
-# Desafio Prático Angular
+# Outros Créditos/Débitos
 
-Reconstrução do módulo contábil `Outros Créditos/Débitos` em Angular, com foco nas duas telas do enunciado:
+Aplicação Angular para o módulo contábil `Outros Créditos/Débitos`, com foco em:
 
 - Consulta de lotes com filtros, tabela, seleção por checkbox, paginação e barra de ações.
-- Modal de inclusão/manutenção de lançamentos com Reactive Forms, busca de conta corrente em mock e grade em memória.
+- Modal de inclusão e manutenção de lançamentos com Reactive Forms, busca de conta corrente em mock e grade em memória.
 
 ## Stack adotada
 
@@ -14,7 +14,7 @@ Reconstrução do módulo contábil `Outros Créditos/Débitos` em Angular, com 
 - Signals para estado local de UI
 - SCSS com tokens visuais próprios
 
-## O que foi entregue
+## O que foi implementado
 
 - Painel de filtros recolhível com:
   - Instituição Resp.
@@ -27,7 +27,7 @@ Reconstrução do módulo contábil `Outros Créditos/Débitos` em Angular, com 
 - Tabela de lotes com:
   - seleção individual
   - selecionar todos da página
-  - colunas pedidas no desafio
+  - colunas principais do módulo
   - formatação de moeda e datas em `pt-BR`
   - paginação primeira/anterior/número/próxima/última
 - Barra de ações com:
@@ -76,11 +76,11 @@ src/app/
 
 ## Decisões técnicas
 
-- Escolhi `standalone components` porque o enunciado pede Angular moderno e isso reduz boilerplate.
+- Usei `standalone components` para manter a base mais enxuta e moderna.
 - Mantive a regra de negócio em `AccountingMockService` para separar UI de dados simulados.
-- Usei `Signals` para estado de interface como seleção, loading, modal aberto e painel lateral.
+- Usei `Signals` para estado de interface como seleção, loading, modal aberta e painel lateral.
 - Usei `Reactive Forms` tanto nos filtros quanto no modal para facilitar validações e previsibilidade.
-- Não usei Angular Material ou PrimeNG para ter mais controle visual e aproximar a referência com CSS próprio.
+- Mantive CSS próprio para controlar melhor a aparência visual do módulo.
 - Implementei um validador customizado de faixa e outro para garantir que a conta corrente foi realmente localizada no mock.
 
 ## Como executar
@@ -92,7 +92,7 @@ npx ng serve
 
 Depois, abra `http://localhost:4200`.
 
-## Validações que rodei
+## Validações executadas
 
 Compilação Angular:
 

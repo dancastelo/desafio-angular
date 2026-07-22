@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "desafio-angular": {
+    "outros-creditos-debitos": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -65,10 +65,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "desafio-angular:build:production"
+              "buildTarget": "outros-creditos-debitos:build:production"
             },
             "development": {
-              "buildTarget": "desafio-angular:build:development"
+              "buildTarget": "outros-creditos-debitos:build:development"
             }
           },
           "defaultConfiguration": "development"

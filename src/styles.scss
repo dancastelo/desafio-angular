@@ -1,0 +1,108 @@
+:root {
+  --brand-950: #092a32;
+  --brand-900: #08353f;
+  --brand-800: #0d5e61;
+  --brand-700: #0b7472;
+  --brand-600: #0f8f88;
+  --surface: rgba(255, 255, 255, 0.74);
+  --surface-elevated: rgba(255, 255, 255, 0.94);
+  --surface-soft: rgba(230, 243, 242, 0.9);
+  --line: rgba(8, 35, 48, 0.12);
+  --text-strong: #13323b;
+  --text-muted: #5c7580;
+  --danger-600: #c03833;
+  --shadow-strong: 0 28px 70px rgba(11, 38, 48, 0.12);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Avenir Next', 'Trebuchet MS', 'Segoe UI', sans-serif;
+  color: var(--text-strong);
+  background:
+    radial-gradient(circle at top left, rgba(15, 143, 136, 0.15), transparent 28rem),
+    radial-gradient(circle at right center, rgba(8, 118, 111, 0.1), transparent 20rem),
+    linear-gradient(180deg, #f6faf9 0%, #eef5f4 48%, #e6f1ef 100%);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+  outline: 2px solid rgba(15, 143, 136, 0.35);
+  outline-offset: 2px;
+}
+
+.shell-card {
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 1.45rem;
+  padding: 1.2rem;
+  background: var(--surface);
+  box-shadow: var(--shadow-strong);
+  backdrop-filter: blur(18px);
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--brand-700);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.primary-button,
+.ghost-button {
+  min-height: 2.7rem;
+  border-radius: 0.85rem;
+  padding: 0.55rem 1rem;
+  font-weight: 700;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease,
+    background-color 150ms ease;
+}
+
+.primary-button {
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, var(--brand-600), var(--brand-800));
+  color: #ffffff;
+  box-shadow: 0 16px 28px rgba(15, 143, 136, 0.22);
+}
+
+.ghost-button {
+  border: 1px solid var(--line);
+  background: var(--surface-elevated);
+  color: var(--text-strong);
+}
+
+.primary-button:not(:disabled):hover,
+.ghost-button:not(:disabled):hover {
+  transform: translateY(-1px);
+}

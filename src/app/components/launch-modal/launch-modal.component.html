@@ -1,0 +1,249 @@
+<div class="overlay" (click)="close()">
+  <section
+    class="modal-shell"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="launch-modal-title"
+    (click)="$event.stopPropagation()"
+  >
+    <header class="modal-header">
+      <div>
+        <p class="eyebrow">
+          @if (currentLot()) {
+            Lote {{ currentLot()?.id }}
+          } @else {
+            Inclusão de lançamento
+          }
+        </p>
+        <h2 id="launch-modal-title">Incluir lançamento</h2>
+        <p class="header-copy">
+          Conta corrente, histórico e documento são obrigatórios. O botão de confirmação só conclui com o formulário válido.
+        </p>
+      </div>
+
+      <button type="button" class="icon-button" (click)="close()" aria-label="Fechar modal">×</button>
+    </header>
+
+    <div class="lot-summary">
+      <label class="lot-selector">
+        <span>Lote da página atual</span>
+        <select
+          [value]="currentLot()?.id ?? ''"
+          (change)="changeLotContext($any($event.target).value)"
+          [disabled]="availableLots().length === 0"
+        >
+          @if (!availableLots().length) {
+            <option value="">Nenhum lote disponível</option>
+          }
+
+          @for (lotOption of availableLots(); track lotOption.id) {
+            <option [value]="lotOption.id">
+              {{ lotOption.id }} - {{ lotOption.instituicao }}
+            </option>
+          }
+        </select>
+      </label>
+
+      <div>
+        <span>Instituição Resp.</span>
+        <strong>{{ currentLot()?.instituicaoResponsavel || '—' }}</strong>
+      </div>
+      <div>
+        <span>Instituição</span>
+        <strong>{{ currentLot()?.instituicao || '—' }}</strong>
+      </div>
+      <div>
+        <span>Valor do lote</span>
+        <strong>
+          @if (currentLot()) {
+            {{ currentLot()?.valor | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
+          } @else {
+            —
+          }
+        </strong>
+      </div>
+    </div>
+
+    @if (currentLot()) {
+      <div class="modal-body">
+        <form class="launch-form" [formGroup]="form">
+          <section class="form-section">
+            <div class="section-heading">
+              <h3>Conta Corrente</h3>
+              <button type="button" class="ghost-link" (click)="prepareNewLaunch()">Preparar novo lançamento</button>
+            </div>
+
+            <div class="two-columns">
+              <label class="field field--search">
+                <span>Conta Corrente</span>
+                <div class="search-row">
+                  <input formControlName="contaCorrente" type="text" [readonly]="readOnlyMode()" placeholder="114444" />
+                  <button type="button" class="icon-button icon-button--search" (click)="lookupAccount()" [disabled]="readOnlyMode() || searchingAccount()">
+                    {{ searchingAccount() ? '…' : '⌕' }}
+                  </button>
+                </div>
+                @if (form.controls.contaCorrente.touched && form.controls.contaCorrente.hasError('required')) {
+                  <small class="field-error">Informe a conta corrente.</small>
+                }
+                @if (form.controls.contaCorrente.touched && form.controls.contaCorrente.hasError('contaNaoLocalizada')) {
+                  <small class="field-error">Faça a busca pela lupa e selecione uma conta válida do mock.</small>
+                }
+              </label>
+
+              <div class="field field--read-only">
+                <span>Titular da conta</span>
+                <div class="read-box">
+                  {{ resolvedAccount()?.titular || 'Localize a conta para exibir o titular' }}
+                </div>
+              </div>
+
+              <label class="field">
+                <span>Valor</span>
+                <input formControlName="valor" type="number" min="0.01" step="0.01" [readonly]="readOnlyMode()" placeholder="0,00" />
+                @if (form.controls.valor.touched && form.controls.valor.hasError('required')) {
+                  <small class="field-error">Informe o valor do lançamento.</small>
+                }
+                @if (form.controls.valor.touched && form.controls.valor.hasError('min')) {
+                  <small class="field-error">O valor precisa ser maior que zero.</small>
+                }
+              </label>
+
+              <label class="field">
+                <span>Histórico</span>
+                <select formControlName="historico" [disabled]="readOnlyMode()">
+                  @for (historico of historicoOptions; track historico) {
+                    <option [value]="historico">{{ historico }}</option>
+                  }
+                </select>
+              </label>
+
+              <label class="field field--checkbox">
+                <input formControlName="estorno" type="checkbox" [disabled]="readOnlyMode()" />
+                <span>Estorno</span>
+              </label>
+
+              <label class="field">
+                <span>Documento</span>
+                <input formControlName="documento" type="text" [readonly]="readOnlyMode()" placeholder="DOC-0001" />
+                @if (form.controls.documento.touched && form.controls.documento.hasError('required')) {
+                  <small class="field-error">O documento é obrigatório.</small>
+                }
+              </label>
+
+              <label class="field field--full">
+                <span>Descrição</span>
+                <textarea formControlName="descricao" rows="3" [readonly]="readOnlyMode()" placeholder="Observações do lançamento"></textarea>
+              </label>
+
+              <label class="field">
+                <span>Situação</span>
+                <input formControlName="situacao" type="text" readonly />
+              </label>
+            </div>
+          </section>
+
+          <section class="form-section">
+            <div class="section-heading">
+              <h3>Documento CSC</h3>
+              <p class="section-copy">Os demais campos foram simplificados, mantendo o PA exigido no enunciado.</p>
+            </div>
+
+            <div class="two-columns">
+              <label class="field">
+                <span>PA</span>
+                <select formControlName="pa" [disabled]="readOnlyMode()">
+                  @for (pa of paOptions; track pa) {
+                    <option [value]="pa">{{ pa }}</option>
+                  }
+                </select>
+              </label>
+
+              <div class="field field--read-only">
+                <span>Documento CSC</span>
+                <div class="read-box">Mock simplificado em memória</div>
+              </div>
+            </div>
+          </section>
+        </form>
+
+        <section class="launches-panel">
+          <div class="section-heading">
+            <h3>Lançamentos do lote</h3>
+            <p class="section-copy">Ao incluir, o lançamento aparece imediatamente na grade abaixo.</p>
+          </div>
+
+          <div class="launches-grid">
+            @if (!launches().length) {
+              <div class="empty-state">Nenhum lançamento cadastrado ainda neste lote.</div>
+            } @else {
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID Lançamento</th>
+                    <th>PA</th>
+                    <th>Conta Corrente</th>
+                    <th>Histórico</th>
+                    <th>Valor</th>
+                    <th>Situação Documento CSC</th>
+                    <th>Retorno Proc.</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  @for (launch of launches(); track launch.id) {
+                    <tr
+                      [class.row-selected]="launch.id === selectedLaunchId()"
+                      (click)="selectLaunch(launch)"
+                      tabindex="0"
+                      (keydown.enter)="selectLaunch(launch)"
+                    >
+                      <td>{{ launch.id }}</td>
+                      <td>{{ launch.pa }}</td>
+                      <td>{{ launch.contaCorrente }}</td>
+                      <td>{{ launch.historico }}</td>
+                      <td>{{ launch.valor | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</td>
+                      <td>{{ launch.situacaoDocumentoCsc }}</td>
+                      <td>{{ launch.retornoProcessamento }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            }
+          </div>
+
+          <div class="actions-row">
+            <button type="button" class="ghost-button" (click)="activateViewMode()">Visualizar</button>
+            <button
+              type="button"
+              class="primary-button"
+              (click)="includeLaunch()"
+              [disabled]="workingAction() !== null || readOnlyMode()"
+            >
+              Incluir
+            </button>
+            <button
+              type="button"
+              class="ghost-button"
+              (click)="updateLaunch()"
+              [disabled]="workingAction() !== null || readOnlyMode()"
+            >
+              Alterar
+            </button>
+            <button type="button" class="ghost-button" (click)="deleteLaunch()" [disabled]="workingAction() !== null">Excluir</button>
+            <button type="button" class="ghost-button" (click)="duplicateLaunch()" [disabled]="workingAction() !== null">Duplicar</button>
+          </div>
+        </section>
+      </div>
+    } @else {
+      <div class="empty-modal-state">
+        Nenhum lote está disponível na página atual. Use o botão <strong>Limpar</strong> ou ajuste os filtros para carregar lotes e então incluir lançamentos.
+      </div>
+    }
+
+    @if (feedback()) {
+      <p class="feedback" [class.feedback--error]="feedback()?.tone === 'error'" [class.feedback--success]="feedback()?.tone === 'success'">
+        {{ feedback()?.text }}
+      </p>
+    }
+  </section>
+</div>

@@ -1,0 +1,140 @@
+.table-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1100px;
+}
+
+thead tr {
+  background: var(--brand-900);
+  color: #f8fffd;
+}
+
+th,
+td {
+  padding: 0.95rem 0.8rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  font-size: 0.92rem;
+  white-space: nowrap;
+}
+
+th {
+  font-size: 0.79rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+tbody tr {
+  transition: background-color 160ms ease;
+}
+
+tbody tr:hover {
+  background: rgba(8, 118, 111, 0.05);
+}
+
+.row-selected {
+  background: rgba(8, 118, 111, 0.08);
+}
+
+.check-cell {
+  width: 3rem;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 7rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.status-pill--open {
+  background: rgba(245, 158, 11, 0.16);
+  color: #a16107;
+}
+
+.status-pill--sent {
+  background: rgba(59, 130, 246, 0.16);
+  color: #1c64c8;
+}
+
+.status-pill--confirmed {
+  background: rgba(5, 150, 105, 0.16);
+  color: #0f7f5b;
+}
+
+.table-state {
+  display: grid;
+  gap: 0.75rem;
+  place-items: center;
+  min-height: 16rem;
+  color: var(--text-muted);
+}
+
+.loading-spinner {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  border: 3px solid rgba(8, 118, 111, 0.2);
+  border-top-color: var(--brand-600);
+  animation: spin 900ms linear infinite;
+}
+
+.pagination-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.pagination-meta {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.separator {
+  margin: 0 0.45rem;
+}
+
+.pagination-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.page-button,
+.ghost-button {
+  min-width: 2.2rem;
+  min-height: 2.2rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface-elevated);
+  color: var(--text-strong);
+}
+
+.page-button--active {
+  background: var(--brand-600);
+  border-color: var(--brand-600);
+  color: #ffffff;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,111 @@
+<section class="shell-card table-card">
+  <div class="table-wrapper">
+    @if (loading()) {
+      <div class="table-state">
+        <div class="loading-spinner"></div>
+        <p>Carregando lotes...</p>
+      </div>
+    } @else if (!lots().length) {
+      <div class="table-state">
+        <p>Nenhum lote encontrado para os filtros informados.</p>
+      </div>
+    } @else {
+      <table>
+        <thead>
+          <tr>
+            <th class="check-cell">
+              <input
+                type="checkbox"
+                [checked]="allVisibleSelected()"
+                [indeterminate]="someVisibleSelected()"
+                (change)="togglePageSelection.emit($any($event.target).checked)"
+                aria-label="Selecionar todos os lotes visíveis"
+              />
+            </th>
+            <th>ID Lote</th>
+            <th>Data Entrada</th>
+            <th>Valor</th>
+            <th>Quant. Lançamentos</th>
+            <th>Usuário Registro</th>
+            <th>Usuário Aprovação</th>
+            <th>Situação Lote</th>
+            <th>Data/Hora Situação Lote</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (lot of lots(); track lot.id) {
+            <tr [class.row-selected]="isSelected(lot.id)">
+              <td class="check-cell">
+                <input
+                  type="checkbox"
+                  [checked]="isSelected(lot.id)"
+                  (change)="toggleRow.emit({ lotId: lot.id, checked: $any($event.target).checked })"
+                  [attr.aria-label]="'Selecionar lote ' + lot.id"
+                />
+              </td>
+              <td>{{ lot.id }}</td>
+              <td>{{ lot.dataEntrada | date: 'dd/MM/yyyy' }}</td>
+              <td>{{ lot.valor | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</td>
+              <td>{{ lot.quantidadeLancamentos }}</td>
+              <td>{{ lot.usuarioRegistro }}</td>
+              <td>{{ lot.usuarioAprovacao || '—' }}</td>
+              <td>
+                <span [class]="statusClass(lot.situacaoLote)">{{ lot.situacaoLote }}</span>
+              </td>
+              <td>{{ lot.dataHoraSituacaoLote | date: 'dd/MM/yyyy, HH:mm:ss' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+
+  <footer class="pagination-bar">
+    <div class="pagination-meta">
+      Página {{ pageIndex() + 1 }} de {{ totalPages() }}
+      <span class="separator">•</span>
+      {{ total() }} registro(s)
+    </div>
+
+    <div class="pagination-actions">
+      <button type="button" class="ghost-button" (click)="pageChange.emit(0)" [disabled]="pageIndex() === 0">«</button>
+      <button
+        type="button"
+        class="ghost-button"
+        (click)="pageChange.emit(pageIndex() - 1)"
+        [disabled]="pageIndex() === 0"
+      >
+        ‹
+      </button>
+
+      @for (page of pageNumbers(); track page) {
+        <button
+          type="button"
+          class="page-button"
+          [class.page-button--active]="page === pageIndex()"
+          (click)="pageChange.emit(page)"
+        >
+          {{ page + 1 }}
+        </button>
+      }
+
+      <button
+        type="button"
+        class="ghost-button"
+        (click)="pageChange.emit(pageIndex() + 1)"
+        [disabled]="pageIndex() >= totalPages() - 1"
+      >
+        ›
+      </button>
+      <button
+        type="button"
+        class="ghost-button"
+        (click)="pageChange.emit(totalPages() - 1)"
+        [disabled]="pageIndex() >= totalPages() - 1"
+      >
+        »
+      </button>
+    </div>
+  </footer>
+</section>

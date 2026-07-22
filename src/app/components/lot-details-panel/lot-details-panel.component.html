@@ -1,0 +1,90 @@
+<div class="panel-overlay" (click)="close()">
+  <aside class="details-panel" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+    <header class="details-panel__header">
+      <div>
+        <p class="eyebrow">Lote {{ lot().id }}</p>
+        <h2>
+          @if (mode() === 'view') {
+            Visualizar lote
+          } @else if (mode() === 'edit') {
+            Alterar lote
+          } @else {
+            Visualizar justificativa
+          }
+        </h2>
+      </div>
+
+      <button type="button" class="icon-button" (click)="close()" aria-label="Fechar painel">×</button>
+    </header>
+
+    @if (mode() === 'view') {
+      <div class="details-stack">
+        <div class="detail-card">
+          <span>Instituição Resp.</span>
+          <strong>{{ lot().instituicaoResponsavel }}</strong>
+        </div>
+        <div class="detail-card">
+          <span>Instituição</span>
+          <strong>{{ lot().instituicao }}</strong>
+        </div>
+        <div class="detail-card">
+          <span>Valor</span>
+          <strong>{{ lot().valor | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</strong>
+        </div>
+        <div class="detail-card">
+          <span>Quantidade de lançamentos</span>
+          <strong>{{ lot().quantidadeLancamentos }}</strong>
+        </div>
+        <div class="detail-card">
+          <span>Data/Hora Situação</span>
+          <strong>{{ lot().dataHoraSituacaoLote | date: 'dd/MM/yyyy, HH:mm:ss' }}</strong>
+        </div>
+        <div class="detail-card detail-card--full">
+          <span>Justificativa</span>
+          <p>{{ lot().justificativa }}</p>
+        </div>
+      </div>
+    } @else if (mode() === 'justification') {
+      <div class="detail-card detail-card--full">
+        <span>Justificativa atual</span>
+        <p>{{ lot().justificativa }}</p>
+      </div>
+    } @else {
+      <form class="edit-form" [formGroup]="form" (ngSubmit)="save()">
+        <label class="field">
+          <span>Instituição Resp.</span>
+          <input formControlName="instituicaoResponsavel" type="text" />
+          @if (form.controls.instituicaoResponsavel.touched && form.controls.instituicaoResponsavel.hasError('required')) {
+            <small class="field-error">Informe a instituição responsável.</small>
+          }
+        </label>
+
+        <label class="field">
+          <span>Instituição</span>
+          <input formControlName="instituicao" type="text" />
+          @if (form.controls.instituicao.touched && form.controls.instituicao.hasError('required')) {
+            <small class="field-error">Informe a instituição.</small>
+          }
+        </label>
+
+        <label class="field">
+          <span>Justificativa</span>
+          <textarea formControlName="justificativa" rows="5"></textarea>
+          @if (form.controls.justificativa.touched && form.controls.justificativa.hasError('required')) {
+            <small class="field-error">A justificativa é obrigatória.</small>
+          }
+          @if (form.controls.justificativa.touched && form.controls.justificativa.hasError('minlength')) {
+            <small class="field-error">Descreva a justificativa com pelo menos 12 caracteres.</small>
+          }
+        </label>
+
+        <div class="panel-actions">
+          <button type="button" class="ghost-button" (click)="close()">Cancelar</button>
+          <button type="submit" class="primary-button" [disabled]="saving()">
+            {{ saving() ? 'Salvando...' : 'Salvar alterações' }}
+          </button>
+        </div>
+      </form>
+    }
+  </aside>
+</div>

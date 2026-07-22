@@ -1,0 +1,90 @@
+<section class="shell-card filter-card">
+  <button
+    type="button"
+    class="filter-card__header"
+    (click)="toggleExpanded.emit()"
+    [attr.aria-expanded]="expanded()"
+    aria-controls="lote-filter-body"
+  >
+    <div>
+      <p class="eyebrow">Filtros</p>
+      <h2>Pesquisar lote outros créditos/débitos</h2>
+    </div>
+    <span class="toggle-indicator">{{ expanded() ? '−' : '+' }}</span>
+  </button>
+
+  @if (expanded()) {
+    <div id="lote-filter-body" class="filter-card__body">
+      <form [formGroup]="form()" class="filters-grid" (ngSubmit)="search.emit()">
+        <label class="field field--wide">
+          <span>Instituição Resp.</span>
+          <input formControlName="instituicaoResponsavel" type="text" placeholder="0001 - Sicoob" />
+        </label>
+
+        <label class="field field--range">
+          <span>ID Lote</span>
+          <div class="range-fields">
+            <input formControlName="idLoteDe" type="number" placeholder="De" />
+            <input formControlName="idLoteAte" type="number" placeholder="Até" />
+          </div>
+        </label>
+
+        <label class="field field--wide">
+          <span>Instituição</span>
+          <input formControlName="instituicao" type="text" placeholder="0002 - Sicoob Central" />
+        </label>
+
+        <label class="field field--range">
+          <span>Valor Lote</span>
+          <div class="range-fields">
+            <input formControlName="valorDe" type="number" min="0" step="0.01" placeholder="De" />
+            <input formControlName="valorAte" type="number" min="0" step="0.01" placeholder="Até" />
+          </div>
+        </label>
+
+        <label class="field field--wide">
+          <span>Situação Lote</span>
+          <select formControlName="situacaoLote">
+            <option value="Todas">Todas</option>
+            <option value="Aberto">Aberto</option>
+            <option value="Enviado">Enviado</option>
+            <option value="Confirmado">Confirmado</option>
+          </select>
+        </label>
+
+        <label class="field field--range">
+          <span>Data Entrada</span>
+          <div class="range-fields">
+            <input formControlName="dataEntradaDe" type="date" />
+            <input formControlName="dataEntradaAte" type="date" />
+          </div>
+        </label>
+
+        @if (hasError('idRange')) {
+          <p class="form-error form-error--grid">O intervalo de ID lote precisa respeitar o valor inicial menor ou igual ao final.</p>
+        }
+
+        @if (hasError('valueRange')) {
+          <p class="form-error form-error--grid">O intervalo de valor lote precisa respeitar o valor inicial menor ou igual ao final.</p>
+        }
+
+        @if (hasError('dateRange')) {
+          <p class="form-error form-error--grid">O intervalo de data entrada precisa respeitar a data inicial menor ou igual à final.</p>
+        }
+
+        <div class="filters-actions">
+          <button type="button" class="ghost-button" (click)="clear.emit()" [disabled]="loading()">
+            Limpar
+          </button>
+          <button type="submit" class="primary-button" [disabled]="form().invalid || loading()">
+            @if (loading()) {
+              <span>Pesquisando...</span>
+            } @else {
+              <span>Pesquisar</span>
+            }
+          </button>
+        </div>
+      </form>
+    </div>
+  }
+</section>

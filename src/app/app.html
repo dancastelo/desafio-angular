@@ -1,0 +1,108 @@
+<div class="app-shell">
+  <aside class="side-rail">
+    <div class="brand-mark">M</div>
+    <div class="side-rail__label">Contábil</div>
+  </aside>
+
+  <main class="workspace">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Início &gt; Outros Créditos/Débitos</p>
+        <h1>Outros Créditos/Débitos</h1>
+      </div>
+
+      <div class="page-header__meta">
+        <span class="meta-chip">Angular 20</span>
+        <span class="meta-chip">Reactive Forms</span>
+      </div>
+    </header>
+
+    @if (message()) {
+      <div class="banner" [class.banner--error]="message()?.tone === 'error'" [class.banner--info]="message()?.tone === 'info'">
+        <span>{{ message()?.text }}</span>
+        <button type="button" class="icon-button icon-button--small" (click)="clearMessage()" aria-label="Fechar aviso">
+          ×
+        </button>
+      </div>
+    }
+
+    @if (errorMessage()) {
+      <div class="banner banner--error">
+        <span>{{ errorMessage() }}</span>
+      </div>
+    }
+
+    <app-filter-panel
+      [form]="filterForm"
+      [expanded]="filtersExpanded()"
+      [loading]="loading()"
+      (toggleExpanded)="toggleFilters()"
+      (clear)="resetFilters()"
+      (search)="search()"
+    />
+
+    <section class="shell-card action-card">
+      <div>
+        <p class="eyebrow">Ações</p>
+        <h2>Barra de ações do lote</h2>
+        <p class="action-card__copy">
+          {{ selectedCount() }} lote(s) selecionado(s). Alterar, Excluir e Visualizar usam exatamente um lote como contexto.
+        </p>
+      </div>
+
+      <div class="action-toolbar">
+        <button type="button" class="ghost-button" (click)="confirmSelectedLots()" [disabled]="!canBatchActions() || actionBusy() !== null">
+          Confirmar
+        </button>
+        <button type="button" class="ghost-button" (click)="sendSelectedLots()" [disabled]="!canBatchActions() || actionBusy() !== null">
+          Enviar
+        </button>
+        <button type="button" class="ghost-button" (click)="openDetails('justification')" [disabled]="!canSingleActions() || !canViewJustification()">
+          Visualizar Justificativa
+        </button>
+        <button type="button" class="primary-button" (click)="openLaunchModal()">
+          Incluir
+        </button>
+        <button type="button" class="ghost-button" (click)="openDetails('edit')" [disabled]="!canSingleActions()">
+          Alterar
+        </button>
+        <button type="button" class="ghost-button" (click)="deleteSelectedLot()" [disabled]="!canSingleActions() || actionBusy() !== null">
+          Excluir
+        </button>
+        <button type="button" class="ghost-button" (click)="openDetails('view')" [disabled]="!canSingleActions()">
+          Visualizar
+        </button>
+      </div>
+    </section>
+
+    <app-lots-table
+      [lots]="currentLots()"
+      [selectedIds]="selectedIds()"
+      [total]="page().total"
+      [pageIndex]="page().pageIndex"
+      [pageSize]="page().pageSize"
+      [loading]="loading()"
+      (toggleRow)="toggleRowSelection($event)"
+      (togglePageSelection)="toggleVisibleSelection($event)"
+      (pageChange)="changePage($event)"
+    />
+  </main>
+</div>
+
+@if (launchModalOpen()) {
+  <app-launch-modal
+    [lot]="launchModalLot()"
+    [availableLots]="currentLots()"
+    (closeModal)="closeLaunchModal()"
+    (lotChanged)="handleLotUpdated($event)"
+  />
+}
+
+@if (detailsLot() && detailsMode()) {
+  <app-lot-details-panel
+    [lot]="detailsLot()!"
+    [mode]="detailsMode()!"
+    (panelClosed)="closeDetailsPanel()"
+    (lotChanged)="handleLotUpdated($event)"
+  />
+}

@@ -210,30 +210,32 @@
               </table>
             }
           </div>
-
-          <div class="actions-row">
-            <button type="button" class="ghost-button" (click)="activateViewMode()">Visualizar</button>
-            <button
-              type="button"
-              class="primary-button"
-              (click)="includeLaunch()"
-              [disabled]="workingAction() !== null || readOnlyMode()"
-            >
-              Incluir
-            </button>
-            <button
-              type="button"
-              class="ghost-button"
-              (click)="updateLaunch()"
-              [disabled]="workingAction() !== null || readOnlyMode()"
-            >
-              Alterar
-            </button>
-            <button type="button" class="ghost-button" (click)="deleteLaunch()" [disabled]="workingAction() !== null">Excluir</button>
-            <button type="button" class="ghost-button" (click)="duplicateLaunch()" [disabled]="workingAction() !== null">Duplicar</button>
-          </div>
         </section>
       </div>
+
+      <footer class="modal-footer">
+        <div class="actions-row">
+          <button type="button" class="ghost-button" (click)="activateViewMode()">Visualizar</button>
+          <button
+            type="button"
+            class="primary-button"
+            (click)="includeLaunch()"
+            [disabled]="workingAction() !== null || readOnlyMode()"
+          >
+            Incluir
+          </button>
+          <button
+            type="button"
+            class="ghost-button"
+            (click)="updateLaunch()"
+            [disabled]="workingAction() !== null || readOnlyMode()"
+          >
+            Alterar
+          </button>
+          <button type="button" class="ghost-button" (click)="deleteLaunch()" [disabled]="workingAction() !== null">Excluir</button>
+          <button type="button" class="ghost-button" (click)="duplicateLaunch()" [disabled]="workingAction() !== null">Duplicar</button>
+        </div>
+      </footer>
     } @else {
       <div class="empty-modal-state">
         Nenhum lote está disponível na página atual. Use o botão <strong>Limpar</strong> ou ajuste os filtros para carregar lotes e então incluir lançamentos.

@@ -18,32 +18,14 @@
     </header>
 
     @if (mode() === 'view') {
-      <div class="details-stack">
-        <div class="detail-card">
-          <span>Instituição Resp.</span>
-          <strong>{{ lot().instituicaoResponsavel }}</strong>
-        </div>
-        <div class="detail-card">
-          <span>Instituição</span>
-          <strong>{{ lot().instituicao }}</strong>
-        </div>
-        <div class="detail-card">
-          <span>Valor</span>
-          <strong>{{ lot().valor | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</strong>
-        </div>
-        <div class="detail-card">
-          <span>Quantidade de lançamentos</span>
-          <strong>{{ lot().quantidadeLancamentos }}</strong>
-        </div>
-        <div class="detail-card">
-          <span>Data/Hora Situação</span>
-          <strong>{{ lot().dataHoraSituacaoLote | date: 'dd/MM/yyyy, HH:mm:ss' }}</strong>
-        </div>
-        <div class="detail-card detail-card--full">
-          <span>Justificativa</span>
-          <p>{{ lot().justificativa }}</p>
-        </div>
-      </div>
+      <dl class="details-list">
+        <div><dt>Instituição responsável</dt><dd>{{ lot().instituicaoResponsavel }}</dd></div>
+        <div><dt>Instituição</dt><dd>{{ lot().instituicao }}</dd></div>
+        <div><dt>Valor do lote</dt><dd>{{ lot().valor | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</dd></div>
+        <div><dt>Quantidade de lançamentos</dt><dd>{{ lot().quantidadeLancamentos }}</dd></div>
+        <div><dt>Data e hora da situação</dt><dd>{{ lot().dataHoraSituacaoLote | date: 'dd/MM/yyyy, HH:mm:ss' }}</dd></div>
+        <div class="details-list__full"><dt>Justificativa</dt><dd>{{ lot().justificativa || 'Não informada' }}</dd></div>
+      </dl>
     } @else if (mode() === 'justification') {
       <div class="detail-card detail-card--full">
         <span>Justificativa atual</span>

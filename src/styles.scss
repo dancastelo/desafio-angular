@@ -1,17 +1,17 @@
 :root {
-  --brand-950: #092a32;
-  --brand-900: #08353f;
-  --brand-800: #0d5e61;
-  --brand-700: #0b7472;
-  --brand-600: #0f8f88;
-  --surface: rgba(255, 255, 255, 0.74);
-  --surface-elevated: rgba(255, 255, 255, 0.94);
-  --surface-soft: rgba(230, 243, 242, 0.9);
-  --line: rgba(8, 35, 48, 0.12);
-  --text-strong: #13323b;
-  --text-muted: #5c7580;
-  --danger-600: #c03833;
-  --shadow-strong: 0 28px 70px rgba(11, 38, 48, 0.12);
+  --brand-950: #123b3b;
+  --brand-900: #164c4a;
+  --brand-800: #1d625d;
+  --brand-700: #24756d;
+  --brand-600: #2a887d;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+  --surface-soft: #f4f8f7;
+  --line: #dce6e3;
+  --text-strong: #173330;
+  --text-muted: #607571;
+  --danger-600: #b53d35;
+  --shadow-strong: 0 8px 20px rgba(21, 58, 53, 0.06);
 }
 
 *,
@@ -27,12 +27,9 @@ body {
 
 body {
   margin: 0;
-  font-family: 'Avenir Next', 'Trebuchet MS', 'Segoe UI', sans-serif;
+  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
   color: var(--text-strong);
-  background:
-    radial-gradient(circle at top left, rgba(15, 143, 136, 0.15), transparent 28rem),
-    radial-gradient(circle at right center, rgba(8, 118, 111, 0.1), transparent 20rem),
-    linear-gradient(180deg, #f6faf9 0%, #eef5f4 48%, #e6f1ef 100%);
+  background: #f6f8f7;
 }
 
 button,
@@ -60,12 +57,11 @@ button:focus-visible {
 }
 
 .shell-card {
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  border-radius: 1.45rem;
-  padding: 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  padding: 1rem;
   background: var(--surface);
   box-shadow: var(--shadow-strong);
-  backdrop-filter: blur(18px);
 }
 
 .eyebrow {
@@ -78,10 +74,10 @@ button:focus-visible {
 
 .primary-button,
 .ghost-button {
-  min-height: 2.7rem;
-  border-radius: 0.85rem;
-  padding: 0.55rem 1rem;
-  font-weight: 700;
+  min-height: 2.5rem;
+  border-radius: 0.35rem;
+  padding: 0.5rem 0.9rem;
+  font-weight: 600;
   transition:
     transform 150ms ease,
     box-shadow 150ms ease,
@@ -92,7 +88,7 @@ button:focus-visible {
   border: 1px solid var(--brand-800);
   background: var(--brand-800);
   color: #ffffff;
-  box-shadow: 0 14px 24px rgba(13, 94, 97, 0.24);
+  box-shadow: none;
 }
 
 .primary-button:not(:disabled):hover {

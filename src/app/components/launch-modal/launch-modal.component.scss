@@ -5,23 +5,21 @@
   display: grid;
   place-items: center;
   padding: 1.5rem;
-  background: rgba(8, 20, 33, 0.56);
-  backdrop-filter: blur(10px);
+  background: rgba(18, 44, 42, 0.42);
 }
 
 .modal-shell {
   width: min(1120px, 100%);
   max-height: calc(100vh - 3rem);
   overflow: auto;
-  border-radius: 1.5rem;
-  background: #fbfffe;
+  border-radius: 0.5rem;
+  background: #ffffff;
   padding: 1.5rem;
-  box-shadow: 0 30px 90px rgba(6, 34, 39, 0.28);
+  box-shadow: 0 18px 48px rgba(20, 55, 50, 0.22);
 }
 
 .modal-header,
-.lot-summary,
-.modal-body {
+.lot-summary {
   display: grid;
   gap: 1rem;
 }
@@ -36,7 +34,6 @@
   margin: 0.25rem 0;
 }
 
-.header-copy,
 .section-copy {
   margin: 0;
   color: var(--text-muted);
@@ -50,9 +47,10 @@
 
 .lot-summary div,
 .lot-selector {
-  padding: 0.95rem 1rem;
-  border-radius: 1rem;
-  background: var(--surface-soft);
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 0.35rem;
+  background: #ffffff;
 }
 
 .lot-summary span,
@@ -74,15 +72,10 @@
   width: 100%;
   min-height: 2.85rem;
   border: 1px solid var(--line);
-  border-radius: 0.8rem;
+  border-radius: 0.35rem;
   padding: 0.8rem 0.95rem;
   background: #ffffff;
   color: var(--text-strong);
-}
-
-.modal-body {
-  grid-template-columns: 1fr;
-  align-items: start;
 }
 
 .launch-form,
@@ -99,8 +92,8 @@
 .launches-panel {
   padding: 1rem;
   border: 1px solid var(--line);
-  border-radius: 1.2rem;
-  background: var(--surface-elevated);
+  border-radius: 0.5rem;
+  background: #ffffff;
 }
 
 .section-heading {
@@ -146,7 +139,7 @@
   width: 100%;
   min-height: 2.85rem;
   border: 1px solid var(--line);
-  border-radius: 0.8rem;
+  border-radius: 0.35rem;
   padding: 0.8rem 0.95rem;
   background: #ffffff;
   color: var(--text-strong);
@@ -194,8 +187,9 @@
   width: 2.5rem;
   height: 2.5rem;
   border: 0;
-  border-radius: 999px;
-  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 0.35rem;
+  background: #ffffff;
   color: var(--brand-700);
   font-size: 1.35rem;
   cursor: pointer;
@@ -274,7 +268,8 @@
 
 .empty-modal-state {
   padding: 1.25rem;
-  border-radius: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
   background: var(--surface-soft);
   color: var(--text-muted);
   line-height: 1.6;
